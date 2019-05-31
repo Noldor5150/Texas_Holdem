@@ -1,0 +1,68 @@
+/* .buttons{
+    display: flex;
+    justify-content: space-evenly;
+} */
+
+/* .flex{
+    display: flex;
+    justify-content: space-evenly;
+} */
+
+.buttons{
+  margin-left: 50%;
+  margin-right: 50%;
+  width: 50%;
+}
+.score{
+font-size: 2em;
+height: 40px;
+line-height: 0.7em;
+}
+
+.dcard{
+position: absolute;
+padding: 10px;
+height: 200px;
+width: 150px;
+border:1px solid black;
+border-radius: 15px;
+background-clip: white;
+display: inline-block;
+top:0;
+left:0;
+}
+.cardtop{
+font-size: 2em;
+height: 40px;
+line-height: 0.7em;
+}
+.cardmid{
+text-align: center;
+font-size: 7em;
+height: 110px;
+}
+.cardbottom{
+  font-size: 2em;
+  height: 50px;
+  line-height: 0.7em;
+  transform: rotate(-180deg);
+}
+
+.hearts .suit::after{content: '\2665'; }
+.spades .suit::after{content: '\2660'; }
+.clubs .suit::after{content: '\2663'; }
+.diams .suit::after{content: '\2666'; }
+
+.spades, .clubs{color: black;}
+.hearts, .diams {color: red;}
+
+.hand{
+  position: relative;
+}
+.players{
+float: left;
+width:49%;
+min-height: 300px ;
+/* border:1px solid black; */
+}
+
