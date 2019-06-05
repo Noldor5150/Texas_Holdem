@@ -5,7 +5,29 @@ let table = [[], [], []];
 let playerOneAllHands = [];
 let playerTwoAllHands = [];
 let prepareButton = document.getElementById('prepare');
-
+let playerTwoAllHandsTest = [
+  [
+    { suit: 'diams', num: '9', value: 9, icon: 'D', isReversed: false },
+    { suit: 'hearts', num: '10', value: 10, icon: 'H', isReversed: false },
+    { suit: 'hearts', num: 'J', value: 11, icon: 'H', isReversed: false },
+    { suit: 'clubs', num: 'Q', value: 12, icon: 'C', isReversed: false },
+    { suit: 'spades', num: 'K', value: 13, icon: 'S', isReversed: false },
+  ],
+  [
+    { suit: 'diams', num: '8', value: 8, icon: 'D', isReversed: false },
+    { suit: 'hearts', num: '10', value: 10, icon: 'H', isReversed: false },
+    { suit: 'hearts', num: 'J', value: 11, icon: 'H', isReversed: false },
+    { suit: 'clubs', num: 'Q', value: 12, icon: 'C', isReversed: false },
+    { suit: 'spades', num: 'K', value: 13, icon: 'S', isReversed: false },
+  ],
+  [
+    { suit: 'hearts', num: '10', value: 10, icon: 'H', isReversed: false },
+    { suit: 'hearts', num: 'J', value: 11, icon: 'H', isReversed: false },
+    { suit: 'clubs', num: 'Q', value: 12, icon: 'C', isReversed: false },
+    { suit: 'spades', num: 'K', value: 13, icon: 'S', isReversed: false },
+    { suit: 'hearts', num: 'A', value: 14, icon: 'H', isReversed: false },
+  ],
+];
 prepareButton.addEventListener('click', prepare);
 
 function prepare() {
@@ -14,10 +36,12 @@ function prepare() {
   deal(deck);
   playerOneAllHands = allPossibleHands(table[0], table[2]);
   playerTwoAllHands = allPossibleHands(table[1], table[2]);
-  console.log(table);
-  console.log(playerOneAllHands);
-  console.log(playerTwoAllHands);
-  console.log(isItFlush(playerOneAllHands));
+  // console.log(table);
+  // console.log(playerOneAllHands);
+  // console.log(playerTwoAllHands);
+  // console.log(isItFlush(playerOneAllHands));
+  // console.log(isItStraight(playerOneAllHands));
+  // console.log(isItStraight(playerTwoAllHandsTest));
 }
 
 function deal(array) {
@@ -35,6 +59,25 @@ function deal(array) {
 
   return table;
 }
+// function isItFlush(array) {
+//   let flushArray = [];
+//   for (let i = 0; i < array.length; i++) {
+//     let flush = array[i].filter(function(hand) {
+//       return hand.every(function(card, index) {
+//         return card.value === array[i][index].value;
+//       });
+//     });
+//     if (flush.length === 5) {
+//       flushArray.push(flush);
+//     }
+//   }
+//   if (flushArray.length > 0) {
+//     return flushArray;
+//   } else {
+//     return null;
+//   }
+// }
+
 // pabandyti su isoriniu filter.ir vidiniu every
 function isItFlush(array) {
   let flushArray = [];
@@ -53,8 +96,54 @@ function isItFlush(array) {
     return null;
   }
 }
-// let handTest = [1, 2];
-// let tableTest = [3, 4, 5, 6, 7];
+function isItStraight(array) {
+  let straightArray = [];
+  for (let i = 0; i < array.length; i++) {
+    let cards = array[i];
+    let firstCard = null;
+    let straight = [];
+    for (let z = 0; z < cards.length; z++) {
+      if (z === 0) {
+        straight.push(cards[z]);
+      }
+      if (firstCard != null) {
+        if (cards[z].value - firstCard.value == 1) {
+          straight.push(cards[z]);
+          console.log(straight);
+        }
+      }
+      firstCard = cards[z];
+
+      console.log(straight);
+    }
+    if (straight.length === 5) {
+      straightArray.push(straight);
+    }
+  }
+  if (straightArray.length > 0) {
+    return straightArray;
+  } else {
+    return straightArray;
+  }
+}
+let tableTest = [3, 3, 3, 6, 7];
+// var counts = [];
+
+// tableTest.forEach(function(element) {
+//   counts[element] = (counts[element] || 0) + 1;
+// });
+
+// for (var element in counts) {
+//   console.log(element + ' = ' + counts[element]);
+// }
+function hasDupes(arr) {
+  return arr.some(function() {
+    return arr.indexOf(value, index + 1) !== -1;
+  });
+}
+
+console.log(hasDupes(tableTest));
+console.log(isItStraight(playerTwoAllHandsTest));
 
 function createBestHandfromOneCard(hand, table) {
   let allPossibleHands = [];
@@ -71,28 +160,21 @@ function createBestHandfromOneCard(hand, table) {
       );
     }
   }
-  // console.log(allPossibleHands);
   return allPossibleHands;
 }
-
-// console.log(tableTest.splice(1, 1, handTest[1]));
-// console.log(tableTest);
-// console.log(createBestHandfromOneCard(handTest, tableTest));
 
 function createBestHandfromTwoCards(hand, table) {
   let allPossibleHands = [];
   for (z = 0; z < table.length; z++) {
     let array = [...table];
     array.splice(z, 1, hand[0]);
-    // console.log(array);
-
     for (i = 0; i < array.length; i++) {
       let array1 = [...array];
       array1.splice(i, 1, hand[1]);
       // console.log(array1);
       if (array[i] !== hand[0]) {
         let array2 = [...array1].sort(function(a, b) {
-          // su objetais reikes a.value, a.value
+          // su objetais reikes a.value, b.value
           return a.value - b.value;
         });
         if (
@@ -107,7 +189,6 @@ function createBestHandfromTwoCards(hand, table) {
       }
     }
   }
-
   return allPossibleHands;
 }
 
